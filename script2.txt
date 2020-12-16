@@ -1,7 +1,4 @@
 
-
-
-
 ### ### ### ### 
 ### ### ### ### 
 ### ### ### ### 
@@ -12,13 +9,14 @@
 
 
 
-sudo apt install net-tools
-sleep 10
+
 export VARABLENAME2="$(ifconfig | grep -i inet | head -1 | awk {'print $2'})"
 export VARABLENAME3="$(dig +short myip.opendns.com @resolver1.opendns.com)"
 VARABLENAME2="$(ifconfig | grep -i inet | head -1 | awk {'print $2'})"
 VARABLENAME3="$(dig +short myip.opendns.com @resolver1.opendns.com)"
-#export DJANGO_SETTINGS_MODULE=deolhonopet.settings
+#export DJANGO_SETTINGS_MODULE=projectmaster.settings
+VARABLENAME4="$(echo $VARABLENAME2 | sha256sum | awk '{print $1}')"
+
 
 
 

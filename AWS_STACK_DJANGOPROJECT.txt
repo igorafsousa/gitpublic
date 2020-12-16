@@ -1,0 +1,120 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  
+  "Description" : "",
+  
+
+  "Resources" : {     
+      
+      
+      
+      
+                     
+        "EC2I3MPYC": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sdb",
+                        "Ebs": {
+                            "VolumeSize": "22",
+                            "DeleteOnTermination": "true"
+                        }
+                    }
+                ],
+                "InstanceType": "t2.micro",
+                "ImageId": "ami-0885b1f6bd170450c",
+                "KeyName": "THISISMYSSHKEY",
+                "SecurityGroupIds":[  
+                                       {  
+                                        "Ref":"EC2SG4BRFZ"
+                                       }
+                                   ]
+            },
+            "DependsOn": [
+                "EC2SG4BRFZ"
+            ]
+        },
+        "EC2SG4BRFZ": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Allow all description",
+                "VpcId" : "vpc-0610f1ac4e209d7c9", 
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 80,
+                        "ToPort": 80,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 22,
+                        "ToPort": 22,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 443,
+                        "ToPort": 443,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 5432,
+                        "ToPort": 5432,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "udp",
+                        "FromPort": 53,
+                        "ToPort": 53,
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ],
+                "SecurityGroupEgress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 80,
+                        "ToPort": 80,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 22,
+                        "ToPort": 22,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 443,
+                        "ToPort": 443,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 5432,
+                        "ToPort": 5432,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "udp",
+                        "FromPort": 53,
+                        "ToPort": 53,
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            }
+        }
+
+
+      
+
+
+
+
+  }
+
+
+
+}

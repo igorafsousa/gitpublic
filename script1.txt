@@ -1,13 +1,5 @@
 
 
-###ASK TO USER RUN
-#git clone https://github.com/igorafsousa/djangoone.git
-
-  
-
-
-
-
 ### ### ### ### 
 ### ### ### ### 
 ### ### ### ### 
@@ -17,7 +9,7 @@
 
 
 
-
+sleep 10
 sudo apt install net-tools
 sleep 10
 export VARABLENAME2="$(ifconfig | grep -i inet | head -1 | awk {'print $2'})"
@@ -36,6 +28,7 @@ VARABLENAME4="$(echo $VARABLENAME2 | sha256sum | awk '{print $1}')"
 ### ### ### ### 
 ### ### ### ### INSTALL >> UPDATE + GIT + PYTHON3
 
+sleep 10
 sudo apt-get update -y
 sudo apt install build-essential -y
 sudo apt install python3 -y
@@ -55,7 +48,7 @@ sudo mkdir -p /django/git
 ### ### ### ### 
 ### ### ### ### PREPARING EBS 
 
-
+sleep 10
 sudo mkdir -p /django
 sudo file -s /dev/xvdb
 sudo mkfs -t xfs /dev/xvdb
@@ -75,6 +68,7 @@ sudo chown -R ubuntu /django
 ### ### ### ### 
 ### ### ### ### AUTOMATICALLY MOUNT EBS 
 
+sleep 10
 sudo cp /etc/fstab /etc/fstab.orig
 #sudo lsblk -o +UUID | grep -i django
 #sudo lsblk -o +UUID | grep -i django | awk {'print $8'}
@@ -93,6 +87,7 @@ sudo mount -a
 ### ### ### ### 
 ### ### ### ### INSTALLING PIP3 + POSTGREE
 
+sleep 10
 sudo apt-get update -y
 sudo apt install python3-pip -y
 sudo apt-get install postgresql postgresql-contrib -y
@@ -110,15 +105,30 @@ sudo pip3 install psycopg2
 ### ### ### ### 
 ### ### ### ### INSTALLING DJANGO
 
-
+sleep 10
 sudo apt-get update -y
 sudo apt install python3-django -y
 sudo pip3 install dnspython
 sudo pip3 install django
-mkdir -p /django/djangoproject
+mkdir -p /django/projectmaster
 django-admin startproject projectmaster /django
 python3 /django/manage.py makemigrations
 python3 /django/manage.py migrate
+
+
+sleep 10
+
+
+echo "listen_addresses = '*'"  | sudo tee -a /etc/postgresql/12/main/postgresql.conf
+echo "host  all  all 0.0.0.0/0 md5"  | sudo tee -a /etc/postgresql/12/main/pg_hba.conf
+
+
+psql -c "CREATE ROLE usrdbdjangoprojectmaster LOGIN SUPERUSER PASSWORD 'masterpwdhorus';"
+psql -c "CREATE DATABASE dbprojectmaster;"
+
+sudo service postgresql stop
+sudo service postgresql start 
+
 sleep 10
 #python3 /django/manage.py createsuperuser
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('usrdjangoprojectmaster', '', 'masterpwdhorus')" | python3 /django/manage.py shell
@@ -135,14 +145,15 @@ echo "from django.contrib.auth.models import User; User.objects.create_superuser
 ### ### ### ### 
 ### ### ### ### PREPARING SETTINGS.PY
 
-cp /django/djangoproject/settings.py /django/djangoproject/settings.py_bkp_1
+sleep 10
+cp /django/projectmaster/settings.py /django/projectmaster/settings.py_bkp_1
 
-nawk '/DATABASES/ {c=6} c && c-- {next}1' /django/djangoproject/settings.py_bkp_1 > /django/djangoproject/settings.py
-#echo "DATABASES = {    'default': {        'ENGINE': 'django.db.backends.postgresql',        'NAME': 'projectmaster',        'USER': 'usrdbprojectmaster',        'PASSWORD': 'masterpwdhorus',        'HOST': 'localhost',        'PORT': '11057',    }}" >> /django/djangoproject/settings.py
-echo "DATABASES = {    'default': {        'ENGINE': 'django.db.backends.postgresql',        'NAME': 'projectmaster',        'USER': 'usrdbprojectmaster',        'PASSWORD': 'masterpwdhorus',        'HOST': '$VARABLENAME2',        'PORT': '11057',    }}" >> /django/djangoproject/settings.py
-sed -i '/ALLOWED_HOSTS/d' /django/djangoproject/settings.py
-echo "ALLOWED_HOSTS = ['$VARABLENAME3']" >> /django/djangoproject/settings.py
-sed -i '/SECRET_KEY/d' /django/djangoproject/settings.py
-echo "SECRET_KEY = '$VARABLENAME4'" >> /django/djangoproject/settings.py
-echo "print(BASE_DIR)"  >> /django/djangoproject/settings.py
+nawk '/DATABASES/ {c=6} c && c-- {next}1' /django/projectmaster/settings.py_bkp_1 > /django/projectmaster/settings.py
+#echo "DATABASES = {    'default': {        'ENGINE': 'django.db.backends.postgresql',        'NAME': 'dbprojectmaster;',        'USER': 'usrdbdjangoprojectmaster',        'PASSWORD': 'masterpwdhorus',        'HOST': 'localhost',        'PORT': '11057',    }}" >> /django/projectmaster/settings.py
+echo "DATABASES = {    'default': {        'ENGINE': 'django.db.backends.postgresql',        'NAME': 'dbprojectmaster;',        'USER': 'usrdbdjangoprojectmaster',        'PASSWORD': 'masterpwdhorus',        'HOST': '$VARABLENAME2',        'PORT': '11057',    }}" >> /django/projectmaster/settings.py
+sed -i '/ALLOWED_HOSTS/d' /django/projectmaster/settings.py
+echo "ALLOWED_HOSTS = ['$VARABLENAME3']" >> /django/projectmaster/settings.py
+sed -i '/SECRET_KEY/d' /django/projectmaster/settings.py
+echo "SECRET_KEY = '$VARABLENAME4'" >> /django/projectmaster/settings.py
+echo "print(BASE_DIR)"  >> /django/projectmaster/settings.py
 
