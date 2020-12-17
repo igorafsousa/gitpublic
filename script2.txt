@@ -34,7 +34,7 @@ VARABLENAME4="$(echo $VARABLENAME2 | sha256sum | awk '{print $1}')"
 
 python3 /django/manage.py makemigrations
 python3 /django/manage.py migrate
-sudo pip3 install djongo
+#sudo pip3 install djongo
 
 
 

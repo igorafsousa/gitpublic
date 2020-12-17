@@ -127,9 +127,12 @@ sudo service postgresql restart
 sudo -u postgres psql -c "CREATE ROLE usrdbdjangoprojectmaster LOGIN SUPERUSER PASSWORD 'masterpwdhorus'"
 sudo -u postgres psql -c "CREATE DATABASE dbprojectmaster"
 
-GRANT ALL PRIVILEGES ON DATABASE dbprojectmaster to usrdbdjangoprojectmaster;
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE dbprojectmaster to usrdbdjangoprojectmaster"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE dbprojectmaster to postgres"
 
-GRANT ALL PRIVILEGES ON DATABASE dbprojectmaster to postgres;
+
+
+
 
 
 sleep 10
