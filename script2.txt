@@ -67,9 +67,9 @@ python3 /django/manage.py startapp polls
 ### ### ### ### MODIFYING MODELS.PY (APP)
 
 
-sed -i '/django.db/d' /django/polls/models.py
+#sed -i '/django.db/d' /django/polls/models.py
 #echo "from django.db import models" >> /django/polls/models.py
-echo "from djongo import models" >> /django/polls/models.py
+
 
 
 
@@ -102,14 +102,14 @@ echo -e  "]" | sudo tee -a  /django/polls/urls.py
 ### ### ### ### MODIFYING URLS.PY  (PROJECT)
 
 
-mv /django/deolhonopet/urls.py /django/deolhonopet/urls.py_bkp_1
+mv /django/projectmaster/urls.py /django/projectmaster/urls.py_bkp_1
 
-echo -e  "from django.contrib import admin" | sudo tee -a /django/deolhonopet/urls.py
-echo -e  "from django.urls import include, path" | sudo tee -a /django/deolhonopet/urls.py
-echo -e  "urlpatterns = [" | sudo tee -a /django/deolhonopet/urls.py
-echo -e  "path('polls/', include('polls.urls'))," | sudo tee -a /django/deolhonopet/urls.py
-echo -e  "path('admin/', admin.site.urls)," | sudo tee -a /django/deolhonopet/urls.py
-echo -e  "]" | sudo tee -a /django/deolhonopet/urls.py
+echo -e  "from django.contrib import admin" | sudo tee -a /django/projectmaster/urls.py
+echo -e  "from django.urls import include, path" | sudo tee -a /django/projectmaster/urls.py
+echo -e  "urlpatterns = [" | sudo tee -a /django/projectmaster/urls.py
+echo -e  "path('polls/', include('polls.urls'))," | sudo tee -a /django/projectmaster/urls.py
+echo -e  "path('admin/', admin.site.urls)," | sudo tee -a /django/projectmaster/urls.py
+echo -e  "]" | sudo tee -a /django/projectmaster/urls.py
 
 
 
@@ -149,14 +149,14 @@ python3 /django/manage.py migrate
 ### ### ### ### ADDING APP TO INSTALLED_APPS
 
 
-VARABLENAME3="'polls',"
-sed -i "/django.contrib.staticfiles/a     $VARABLENAME3  " /django/deolhonopet/settings.py
+VARABLENAME31="'polls',"
+sed -i "/django.contrib.staticfiles/a     $VARABLENAME31  " /django/projectmaster/settings.py
 
-VARABLENAME31="'deolhonopet',"
-sed -i "/django.contrib.staticfiles/a     $VARABLENAME31  " /django/deolhonopet/settings.py
+VARABLENAME32="'projectmaster',"
+sed -i "/django.contrib.staticfiles/a     $VARABLENAME32  " /django/projectmaster/settings.py
 
-echo "import django"  >> /django/deolhonopet/settings.py
-echo "django.setup()" >> /django/deolhonopet/settings.py
+echo "import django"  >> /django/projectmaster/settings.py
+echo "django.setup()" >> /django/projectmaster/settings.py
 
 
 
@@ -198,8 +198,7 @@ VARABLENAME3="$(dig +short myip.opendns.com @resolver1.opendns.com)"
 #nohup python3 /django/manage.py runserver $VARABLENAME2:8000 &
 
 sleep 2
-
-       
+   
 
 
 
@@ -262,14 +261,14 @@ sudo systemctl stop apache2.service
 
 sudo pip3 install mod_wsgi
 
-VARABLENAME4="'mod_wsgi.server',"
-sed -i "/django.contrib.staticfiles/a     $VARABLENAME4  " /django/deolhonopet/settings.py
+VARABLENAME7="'mod_wsgi.server',"
+sed -i "/django.contrib.staticfiles/a     $VARABLENAME7  " /django/projectmaster/settings.py
 
-sed -i '/STATIC_URL/d' /django/deolhonopet/settings.py
+sed -i '/STATIC_URL/d' /django/projectmaster/settings.py
 
 
-echo "STATIC_URL = '/static/'"                             >> /django/deolhonopet/settings.py
-echo "STATIC_ROOT = os.path.join(BASE_DIR, 'static')"      >> /django/deolhonopet/settings.py
+echo "STATIC_URL = '/static/'"                             >> /django/projectmaster/settings.py
+echo "STATIC_ROOT = os.path.join(BASE_DIR, 'static')"      >> /django/projectmaster/settings.py
 
 
 
@@ -285,7 +284,7 @@ echo "STATIC_ROOT = os.path.join(BASE_DIR, 'static')"      >> /django/deolhonope
 
 
 
-cp /django/deolhonopet/wsgi.py /django/deolhonopet/wsgi.py_bkp
+cp /django/projectmaster/wsgi.py /django/projectmaster/wsgi.py_bkp
 
 
 
@@ -293,21 +292,21 @@ VARABLENAME333="$(sudo find / -iname dist-packages | grep -i /usr/local/lib | gr
 
 
 
-echo "import os" >   /django/deolhonopet/wsgi.py 
-echo "import sys" >> /django/deolhonopet/wsgi.py 
-echo "import site" >> /django/deolhonopet/wsgi.py 
-#echo "site.addsitedir('/home/ubuntu/.local/lib/python3.8/site-packages')" >> /django/deolhonopet/wsgi.py 
-echo "site.addsitedir('$VARABLENAME333')" >> /django/deolhonopet/wsgi.py 
-echo "sys.path.append('/django/deolhonopet')" >> /django/deolhonopet/wsgi.py 
-echo "sys.path.append('/django')" >> /django/deolhonopet/wsgi.py 
-echo "os.environ['DJANGO_SETTINGS_MODULE'] = 'deolhonopet.settings'" >> /django/deolhonopet/wsgi.py 
-echo "import django.core.handlers.wsgi" >> /django/deolhonopet/wsgi.py 
-echo "application = django.core.handlers.wsgi.WSGIHandler()" >> /django/deolhonopet/wsgi.py 
+echo "import os" >   /django/projectmaster/wsgi.py 
+echo "import sys" >> /django/projectmaster/wsgi.py 
+echo "import site" >> /django/projectmaster/wsgi.py 
+#echo "site.addsitedir('/home/ubuntu/.local/lib/python3.8/site-packages')" >> /django/projectmaster/wsgi.py 
+echo "site.addsitedir('$VARABLENAME333')" >> /django/projectmaster/wsgi.py 
+echo "sys.path.append('/django/projectmaster')" >> /django/projectmaster/wsgi.py 
+echo "sys.path.append('/django')" >> /django/projectmaster/wsgi.py 
+echo "os.environ['DJANGO_SETTINGS_MODULE'] = 'projectmaster.settings'" >> /django/projectmaster/wsgi.py 
+echo "import django.core.handlers.wsgi" >> /django/projectmaster/wsgi.py 
+echo "application = django.core.handlers.wsgi.WSGIHandler()" >> /django/projectmaster/wsgi.py 
 
 
 
 
-#/django/deolhonopet/wsgi.py ( EXEMPLO )
+#/django/projectmaster/wsgi.py ( EXEMPLO )
 
 #####import os
 #####import sys
@@ -317,9 +316,9 @@ echo "application = django.core.handlers.wsgi.WSGIHandler()" >> /django/deolhono
 #####site.addsitedir('/home/ubuntu/.local/lib/python3.8/site-packages')
 #####
 ###### Add the app's directory to the PYTHONPATH
-#####sys.path.append('/django/deolhonopet')
+#####sys.path.append('/django/projectmaster')
 #####sys.path.append('/django')
-#####os.environ['DJANGO_SETTINGS_MODULE'] = 'deolhonopet.settings'
+#####os.environ['DJANGO_SETTINGS_MODULE'] = 'projectmaster.settings'
 #####import django.core.handlers.wsgi
 #####application = django.core.handlers.wsgi.WSGIHandler()
 
@@ -375,7 +374,7 @@ sudo sed -i "/wsgi_module/a  $VARABLENAME61   " /etc/apache2/apache2.conf
 
 
 
-sudo sed -i "/WSGIPythonHome/a  WSGIScriptAlias / /django/deolhonopet/wsgi.py  #WSGICONGIXX1  " /etc/apache2/apache2.conf
+sudo sed -i "/WSGIPythonHome/a  WSGIScriptAlias / /django/projectmaster/wsgi.py  #WSGICONGIXX1  " /etc/apache2/apache2.conf
 sudo sed -i "/WSGICONGIXX1/a  <Directory /django/polls> #WSGICONGIXX2  " /etc/apache2/apache2.conf
 sudo sed -i "/WSGICONGIXX2/a  <Files wsgi.py>  #WSGICONGIXX3 " /etc/apache2/apache2.conf
 sudo sed -i "/WSGICONGIXX3/a  Require all granted  #WSGICONGIXX4 " /etc/apache2/apache2.conf
@@ -407,7 +406,7 @@ sudo sed -i 's/#WSGICONGIXX10//' /etc/apache2/apache2.conf
 
 
 
-#####WSGIScriptAlias / /django/deolhonopet/wsgi.py
+#####WSGIScriptAlias / /django/projectmaster/wsgi.py
 #####<Directory /django/polls>
 #####<Files wsgi.py>
 #####Require all granted

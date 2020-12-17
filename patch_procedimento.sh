@@ -18,11 +18,11 @@ echo '<<option value="7" >7</option>' 	>> /django/polls/templates/polls/home.htm
 echo '<<option value="8" >8</option>' 	>> /django/polls/templates/polls/home.html
 echo '<<option value="9" >9</option>' 	>> /django/polls/templates/polls/home.html
 
-echo '</select>'	 			>> /django/polls/templates/polls/home.html
+echo '</select>' >> /django/polls/templates/polls/home.html
 
 echo '<input type="submit" value="submit">'	>> /django/polls/templates/polls/home.html
 
-echo '</form>' 			>> /django/polls/templates/polls/home.html
+echo '</form>' >> /django/polls/templates/polls/home.html
 
 
 
@@ -32,7 +32,7 @@ echo '</form>' 			>> /django/polls/templates/polls/home.html
 ############### CREATE TEMPLATE PASSWORD
 
 
-echo "<h1>PASSWORD</h1>" 				>  /django/polls/templates/polls/password.html
+echo "<h1>PASSWORD</h1>"  >  /django/polls/templates/polls/password.html
 
 
 
@@ -43,19 +43,19 @@ echo "<h1>PASSWORD</h1>" 				>  /django/polls/templates/polls/password.html
 ############### CORRECT URLS.PY ON PROJECT 
 
 
-cp /django/deolhonopet/urls.py /django/deolhonopet/urls.py_bkp_2
+cp /django/projectmaster/urls.py /django/projectmaster/urls.py_bkp_2
 
 
 
-echo -e  "from django.contrib import admin" | sudo tee -a /django/deolhonopet/urls.py
-echo -e  "from django.urls import include, path" | sudo tee -a /django/deolhonopet/urls.py
-echo -e  "urlpatterns = [" | sudo tee -a /django/deolhonopet/urls.py
+echo -e  "from django.contrib import admin" | sudo tee -a /django/projectmaster/urls.py
+echo -e  "from django.urls import include, path" | sudo tee -a /django/projectmaster/urls.py
+echo -e  "urlpatterns = [" | sudo tee -a /django/projectmaster/urls.py
 
-echo -e  "path('admin/', admin.site.urls)," | sudo tee -a /django/deolhonopet/urls.py
+echo -e  "path('admin/', admin.site.urls)," | sudo tee -a /django/projectmaster/urls.py
 
-echo -e  "path('', include('polls.urls'))," | sudo tee -a /django/deolhonopet/urls.py
+echo -e  "path('', include('polls.urls'))," | sudo tee -a /django/projectmaster/urls.py
 
-echo -e  "]" | sudo tee -a /django/deolhonopet/urls.py
+echo -e  "]" | sudo tee -a /django/projectmaster/urls.py
 
 
 

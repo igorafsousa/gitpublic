@@ -127,6 +127,10 @@ sudo service postgresql restart
 sudo -u postgres psql -c "CREATE ROLE usrdbdjangoprojectmaster LOGIN SUPERUSER PASSWORD 'masterpwdhorus'"
 sudo -u postgres psql -c "CREATE DATABASE dbprojectmaster"
 
+GRANT ALL PRIVILEGES ON DATABASE dbprojectmaster to usrdbdjangoprojectmaster;
+
+GRANT ALL PRIVILEGES ON DATABASE dbprojectmaster to postgres;
+
 
 sleep 10
 #python3 /django/manage.py createsuperuser
@@ -148,7 +152,7 @@ sleep 10
 cp /django/projectmaster/settings.py /django/projectmaster/settings.py_bkp_1
 
 nawk '/DATABASES/ {c=6} c && c-- {next}1' /django/projectmaster/settings.py_bkp_1 > /django/projectmaster/settings.py
-echo "DATABASES = {    'default': {        'ENGINE': 'django.db.backends.postgresql',        'NAME': 'dbprojectmaster;',        'USER': 'usrdbdjangoprojectmaster',        'PASSWORD': 'masterpwdhorus',        'HOST': '$VARABLENAME2',        'PORT': '5432',    }}" >> /django/projectmaster/settings.py
+echo "DATABASES = {    'default': {        'ENGINE': 'django.db.backends.postgresql',        'NAME': 'dbprojectmaster',        'USER': 'usrdbdjangoprojectmaster',        'PASSWORD': 'masterpwdhorus',        'HOST': '$VARABLENAME2',        'PORT': '5432',    }}" >> /django/projectmaster/settings.py
 sed -i '/ALLOWED_HOSTS/d' /django/projectmaster/settings.py
 echo "ALLOWED_HOSTS = ['$VARABLENAME3']" >> /django/projectmaster/settings.py
 sed -i '/SECRET_KEY/d' /django/projectmaster/settings.py
