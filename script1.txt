@@ -148,8 +148,7 @@ sleep 10
 cp /django/projectmaster/settings.py /django/projectmaster/settings.py_bkp_1
 
 nawk '/DATABASES/ {c=6} c && c-- {next}1' /django/projectmaster/settings.py_bkp_1 > /django/projectmaster/settings.py
-#echo "DATABASES = {    'default': {        'ENGINE': 'django.db.backends.postgresql',        'NAME': 'dbprojectmaster;',        'USER': 'usrdbdjangoprojectmaster',        'PASSWORD': 'masterpwdhorus',        'HOST': 'localhost',        'PORT': '11057',    }}" >> /django/projectmaster/settings.py
-echo "DATABASES = {    'default': {        'ENGINE': 'django.db.backends.postgresql',        'NAME': 'dbprojectmaster;',        'USER': 'usrdbdjangoprojectmaster',        'PASSWORD': 'masterpwdhorus',        'HOST': '$VARABLENAME2',        'PORT': '11057',    }}" >> /django/projectmaster/settings.py
+echo "DATABASES = {    'default': {        'ENGINE': 'django.db.backends.postgresql',        'NAME': 'dbprojectmaster;',        'USER': 'usrdbdjangoprojectmaster',        'PASSWORD': 'masterpwdhorus',        'HOST': '$VARABLENAME2',        'PORT': '5432',    }}" >> /django/projectmaster/settings.py
 sed -i '/ALLOWED_HOSTS/d' /django/projectmaster/settings.py
 echo "ALLOWED_HOSTS = ['$VARABLENAME3']" >> /django/projectmaster/settings.py
 sed -i '/SECRET_KEY/d' /django/projectmaster/settings.py
