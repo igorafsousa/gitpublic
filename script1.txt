@@ -54,7 +54,7 @@ sudo file -s /dev/xvdb
 sudo mkfs -t xfs /dev/xvdb
 sudo mount /dev/xvdb   /django
 sudo chown -R ubuntu /django
-sudo chown -R ubuntu /django
+#sudo chown -R ubuntu /django
 
 
 
@@ -122,12 +122,11 @@ sleep 10
 echo "listen_addresses = '*'"  | sudo tee -a /etc/postgresql/12/main/postgresql.conf
 echo "host  all  all 0.0.0.0/0 md5"  | sudo tee -a /etc/postgresql/12/main/pg_hba.conf
 
+sudo service postgresql restart
 
-psql -c "CREATE ROLE usrdbdjangoprojectmaster LOGIN SUPERUSER PASSWORD 'masterpwdhorus';"
-psql -c "CREATE DATABASE dbprojectmaster;"
+sudo -u postgres psql -c "CREATE ROLE usrdbdjangoprojectmaster LOGIN SUPERUSER PASSWORD 'masterpwdhorus'"
+sudo -u postgres psql -c "CREATE DATABASE dbprojectmaster"
 
-sudo service postgresql stop
-sudo service postgresql start 
 
 sleep 10
 #python3 /django/manage.py createsuperuser
